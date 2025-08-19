@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Coin Of Minting</title>
+<link href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@100..900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0c0c0c;
+      --gold: #d4af37;
+      --text: #e3e3e3;
+  font-family: "Lexend Deca", sans-serif;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .hero {
+      height: 100vh;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      text-align: center;
+    }
+
+    .coin {
+      width: 160px;
+      opacity: 0;
+      transform: translateY(100px);
+      animation: lift 2.4s ease-out forwards;
+    }
+
+    @keyframes lift {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      color: var(--gold);
+      margin-top: 30px;
+      letter-spacing: 0.5px;
+    }
+
+    .buttons {
+      margin-top: 40px;
+        font-family: "Lexend Deca", sans-serif;
+
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .btn {
+      padding: 12px 30px;
+        font-family: "Lexend Deca", sans-serif;
+
+      background: transparent;
+      border: 2px solid var(--gold);
+      color: var(--gold);
+      font-size: 1rem;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      background-color: var(--gold);
+      color: #000;
+    }
+
+    .footer {
+      position: absolute;
+      bottom: 25px;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      gap: 40px;
+      font-size: 0.9rem;
+    }
+
+    .footer a {
+      color: var(--gold);
+      text-decoration: none;
+      border-bottom: 1px dotted transparent;
+      transition: 0.2s;
+    }
+
+    .footer a:hover {
+      border-bottom: 1px dotted var(--gold);
+    }
+
+    /* Modal Styles */
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(0,0,0,0.85);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      padding: 30px;
+      z-index: 1000;
+    }
+
+    .modal-content {
+      background-color: #121212;
+      border: 1px solid var(--gold);
+      color: var(--text);
+      padding: 30px;
+      max-width: 600px;
+      max-height: 80vh;
+      overflow-y: auto;
+      border-radius: 6px;
+      text-align: left;
+      position: relative;
+    }
+
+    .close {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      font-size: 1.2rem;
+      color: var(--gold);
+      cursor: pointer;
+    }
+
+    .modal h2 {
+      color: var(--gold);
+      margin-bottom: 15px;
+      font-size: 1.5rem;
+    }
+
+    @media (max-width: 500px) {
+      h1 {
+        font-size: 1.6rem;
+      }
+
+      .btn {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+      }
+
+      .footer {
+        flex-direction: column;
+        gap: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="hero">
+    <img src="2.png" alt="Coin Of Coining" class="coin" />
+    <h1>Coin Of Minting</h1>
+
+    <div class="buttons">
+      <button class="btn" onclick="connectWallet()">Connect Phantom</button>
+      <button class="btn" onclick="openModal()">Explore the Lore</button>
+    </div>
+  </div>
+
+  <div class="footer">
+    <a href="https://x.com/coinofMinting" target="_blank">Twitter</a>
+    <a href="https://x.com/coinofMinting" target="_blank">CA: View on Solscan</a>
+  </div>
+
+  <!-- Lore Modal -->
+  <div class="modal" id="loreModal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">✕</span>
+      <h2>The Lore of Coin Of Minting</h2>
+      <p>
+        Before the rise of tokens, chains, and memecoins… there was one coin that ruled them all: <strong>KingCoin</strong>.
+      </p>
+      <p>
+        Forged in the zero block of the forgotten ledger, KingCoin wasn’t created — it manifested. It existed before price charts, before volume, before speculation. It is not on the blockchain. It is the blockchain.
+      </p>
+      <p>
+        "Coin Of Minting" is not a project. It is a throne reclaimed.
+      </p>
+      <p>
+        Every token launched owes its heartbeat to KingCoin. Every swap, every bridge, every airdrop — borrowed breath from the origin.
+      </p>
+      <p>
+        Those who hold Coin Of Minting don’t just hold a bag. They hold the right to claim dominion in a market of pretenders. They don’t chase pumps. They command them.
+      </p>
+      <p>
+        Welcome to the court. There is only one king. And he has returned.
+      </p>
+    </div>
+  </div>
+
+  <script>
+    async function connectWallet() {
+      if (window.solana && window.solana.isPhantom) {
+        try {
+          const resp = await window.solana.connect();
+          alert('Connected: ' + resp.publicKey.toString());
+        } catch (err) {
+          alert('Connection rejected.');
+        }
+      } else {
+        alert('Phantom Wallet not detected. Get it at https://phantom.app');
+      }
+    }
+
+    function openModal() {
+      document.getElementById('loreModal').style.display = 'flex';
+    }
+
+    function closeModal() {
+      document.getElementById('loreModal').style.display = 'none';
+    }
+  </script>
+
+</body>
+</html>
